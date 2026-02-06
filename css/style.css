@@ -939,3 +939,252 @@
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
+
+    /* ============================================================================
+       POS-Specific Styles
+       ============================================================================ */
+
+    .pos-label {
+      font-size: 12px;
+      font-weight: 700;
+      background: var(--primary);
+      color: white;
+      padding: 2px 8px;
+      border-radius: 4px;
+      vertical-align: middle;
+      margin-left: 4px;
+      letter-spacing: 1px;
+    }
+
+    /* Terminal Status Badge */
+    .terminal-status-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    .terminal-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .terminal-status-badge.status-idle {
+      background: #E6F2FF;
+      color: var(--primary);
+    }
+
+    .terminal-status-badge.status-idle .terminal-dot {
+      background: var(--primary);
+    }
+
+    .terminal-status-badge.status-pending {
+      background: #FFF3E0;
+      color: #E65100;
+    }
+
+    .terminal-status-badge.status-pending .terminal-dot {
+      background: #FF9500;
+      animation: pulse-dot 1.5s infinite;
+    }
+
+    .terminal-status-badge.status-active {
+      background: #E8F5E9;
+      color: #2E7D32;
+    }
+
+    .terminal-status-badge.status-active .terminal-dot {
+      background: var(--accent);
+      animation: pulse-dot 1.5s infinite;
+    }
+
+    .terminal-status-badge.status-complete {
+      background: #E8F5E9;
+      color: #2E7D32;
+    }
+
+    .terminal-status-badge.status-complete .terminal-dot {
+      background: var(--accent);
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    /* Customer Banner */
+    .customer-banner {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 20px;
+      background: linear-gradient(90deg, rgba(0, 196, 140, 0.1), transparent);
+      border-top: 1px solid var(--border-light);
+    }
+
+    @media (min-width: 768px) {
+      .customer-banner {
+        padding: 10px 40px;
+      }
+    }
+
+    .customer-banner-avatar {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .customer-banner-info {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .customer-banner-info strong {
+      color: var(--text-primary);
+    }
+
+    .customer-banner-points {
+      background: var(--accent);
+      color: white;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: 700;
+      margin-left: 8px;
+    }
+
+    .bank-linked-tag {
+      background: var(--primary);
+      color: white;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: 700;
+      margin-left: 4px;
+    }
+
+    /* Terminal Status Panel (in checkout) */
+    .terminal-status-panel {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 16px;
+    }
+
+    .terminal-status-panel.pending {
+      background: #FFF8E1;
+      border: 1px solid #FFD54F;
+    }
+
+    .terminal-status-panel.active {
+      background: #E8F5E9;
+      border: 1px solid #81C784;
+    }
+
+    .terminal-status-panel.success {
+      background: #E8F5E9;
+      border: 2px solid var(--accent);
+    }
+
+    .terminal-status-panel.error {
+      background: #FFEBEE;
+      border: 2px solid #EF5350;
+    }
+
+    .terminal-status-spinner {
+      width: 32px;
+      height: 32px;
+      border: 3px solid rgba(0,0,0,0.1);
+      border-top-color: #FF9500;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      flex-shrink: 0;
+    }
+
+    .terminal-status-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .terminal-status-panel.success .terminal-status-icon {
+      background: var(--accent);
+      color: white;
+      font-weight: 800;
+    }
+
+    .terminal-status-panel.error .terminal-status-icon {
+      background: #EF5350;
+      color: white;
+      font-weight: 800;
+    }
+
+    .terminal-status-text strong {
+      display: block;
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+
+    .terminal-status-text p {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+
+    /* Checkout Actions */
+    .checkout-actions {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .checkout-btn-large {
+      padding: 18px 24px !important;
+      font-size: 16px !important;
+      border-radius: 12px !important;
+    }
+
+    .btn-ach {
+      background: var(--accent);
+      color: white;
+      box-shadow: 0 4px 12px rgba(0, 196, 140, 0.3);
+    }
+
+    .btn-ach:hover {
+      background: #00A874;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 196, 140, 0.4);
+    }
+
+    .btn-disabled {
+      background: var(--bg-lighter);
+      color: var(--text-muted);
+      border: 1px solid var(--border-light);
+      cursor: not-allowed;
+    }
+
+    .btn-disabled:hover {
+      transform: none;
+      box-shadow: none;
+    }
