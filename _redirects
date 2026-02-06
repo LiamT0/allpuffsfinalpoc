@@ -3,5 +3,11 @@
 # API proxy (when you add backend)
 # /api/*  https://your-backend-api.com/:splat  200
 
-# SPA routing - all routes go to index.html
+# Card terminal - serve directly (not SPA routed)
+/terminal  /card-terminal.html  200
+
+# POS display - serve directly
+/pos  /pos.html  200
+
+# SPA routing - all other routes go to index.html
 /*    /index.html   200

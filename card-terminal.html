@@ -63,9 +63,7 @@
     }
 
     .logo-p-container {
-      width: 90px;
-      height: 110px;
-      margin-bottom: 20px;
+      margin-bottom: 12px;
       position: relative;
       animation: logoFloat 4s ease-in-out infinite;
     }
@@ -75,16 +73,23 @@
       50% { transform: translateY(-10px) scale(1.02); }
     }
 
-    .logo-p {
-      width: 100%;
-      height: 100%;
-      filter: drop-shadow(0 0 25px var(--primary-glow));
+    .logo-brand-text {
+      font-size: 52px;
+      font-weight: 900;
+      color: var(--text);
+      letter-spacing: -1px;
+      line-height: 1;
+    }
+
+    .logo-brand-text .green-p {
+      color: var(--primary);
+      text-shadow: 0 0 30px rgba(57, 255, 20, 0.6);
       animation: logoGlow 3s ease-in-out infinite;
     }
 
     @keyframes logoGlow {
-      0%, 100% { filter: drop-shadow(0 0 20px var(--primary-glow)); }
-      50% { filter: drop-shadow(0 0 45px var(--primary-glow)); }
+      0%, 100% { text-shadow: 0 0 20px rgba(57, 255, 20, 0.4); }
+      50% { text-shadow: 0 0 45px rgba(57, 255, 20, 0.8); }
     }
 
     .brand-text {
@@ -713,22 +718,31 @@
 <body>
   <div class="terminal-screen">
     <div class="screen-content">
-      <!-- Phone Entry (FIRST) -->
-      <div class="screen-state active" id="statePhone">
+      <!-- Waiting for POS -->
+      <div class="screen-state active" id="stateWaiting">
         <div class="allpuffs-logo">
           <div class="logo-p-container">
-            <svg class="logo-p" viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
-              <!-- Outer P shape -->
-              <path d="M 30 20 Q 30 10 40 10 L 70 10 Q 90 10 95 30 Q 100 50 95 70 Q 90 85 70 85 L 50 85 L 50 60 L 65 60 Q 75 60 78 50 Q 80 40 75 32 Q 70 25 60 25 L 45 25 L 45 135" 
-                    fill="#39FF14" 
-                    stroke="none"/>
-              <!-- Inner curved detail -->
-              <path d="M 60 40 Q 68 40 70 48 Q 72 56 68 64 Q 64 70 56 70" 
-                    fill="#0A0A0A" 
-                    stroke="none"/>
-            </svg>
+            <div class="logo-brand-text">All<span class="green-p">P</span>uffs</div>
           </div>
-          <div class="brand-text">ALL PUFFS</div>
+          <div class="brand-subtitle">VAPE & SMOKE SHOP</div>
+        </div>
+
+        <div class="processing-container">
+          <div class="spinner" style="border-top-color: var(--text-muted); width: 80px; height: 80px;"></div>
+        </div>
+
+        <div class="status-message">
+          <div class="status-title">Waiting for Transaction</div>
+          <div class="status-subtitle">Terminal is connected and ready.<br>Ring up items on the POS to begin.</div>
+        </div>
+      </div>
+
+      <!-- Phone Entry -->
+      <div class="screen-state" id="statePhone">
+        <div class="allpuffs-logo">
+          <div class="logo-p-container">
+            <div class="logo-brand-text">All<span class="green-p">P</span>uffs</div>
+          </div>
           <div class="brand-subtitle">VAPE & SMOKE SHOP</div>
         </div>
 
@@ -763,12 +777,7 @@
       <div class="screen-state" id="statePaymentMethod">
         <div class="allpuffs-logo">
           <div class="logo-p-container">
-            <svg class="logo-p" viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
-              <path d="M 30 20 Q 30 10 40 10 L 70 10 Q 90 10 95 30 Q 100 50 95 70 Q 90 85 70 85 L 50 85 L 50 60 L 65 60 Q 75 60 78 50 Q 80 40 75 32 Q 70 25 60 25 L 45 25 L 45 135" 
-                    fill="#39FF14"/>
-              <path d="M 60 40 Q 68 40 70 48 Q 72 56 68 64 Q 64 70 56 70" 
-                    fill="#0A0A0A"/>
-            </svg>
+            <div class="logo-brand-text">All<span class="green-p">P</span>uffs</div>
           </div>
         </div>
 
@@ -782,15 +791,15 @@
         </div>
 
         <div class="payment-methods">
-          <div class="payment-option" onclick="selectPayment('ach')">
+          <div class="payment-option" data-payment="ach" onclick="selectPayment('ach')">
             <div class="payment-icon">🏦</div>
             <div class="payment-info">
               <div class="payment-name">Bank Payment (ACH)</div>
-              <div class="payment-desc">Pay directly from your bank</div>
+              <div class="payment-desc">Link bank account to unlock</div>
             </div>
           </div>
 
-          <div class="payment-option" onclick="selectPayment('card')">
+          <div class="payment-option" data-payment="card" onclick="selectPayment('card')">
             <div class="payment-icon">💳</div>
             <div class="payment-info">
               <div class="payment-name">Credit/Debit Card</div>
@@ -804,14 +813,8 @@
       <div class="screen-state" id="stateIdle">
         <div class="allpuffs-logo">
           <div class="logo-p-container">
-            <svg class="logo-p" viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
-              <path d="M 30 20 Q 30 10 40 10 L 70 10 Q 90 10 95 30 Q 100 50 95 70 Q 90 85 70 85 L 50 85 L 50 60 L 65 60 Q 75 60 78 50 Q 80 40 75 32 Q 70 25 60 25 L 45 25 L 45 135" 
-                    fill="#39FF14"/>
-              <path d="M 60 40 Q 68 40 70 48 Q 72 56 68 64 Q 64 70 56 70" 
-                    fill="#0A0A0A"/>
-            </svg>
+            <div class="logo-brand-text">All<span class="green-p">P</span>uffs</div>
           </div>
-          <div class="brand-text">ALL PUFFS</div>
           <div class="brand-subtitle">VAPE & SMOKE SHOP</div>
         </div>
         
@@ -834,12 +837,7 @@
       <div class="screen-state" id="stateReading">
         <div class="allpuffs-logo">
           <div class="logo-p-container">
-            <svg class="logo-p" viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
-              <path d="M 30 20 Q 30 10 40 10 L 70 10 Q 90 10 95 30 Q 100 50 95 70 Q 90 85 70 85 L 50 85 L 50 60 L 65 60 Q 75 60 78 50 Q 80 40 75 32 Q 70 25 60 25 L 45 25 L 45 135" 
-                    fill="#39FF14"/>
-              <path d="M 60 40 Q 68 40 70 48 Q 72 56 68 64 Q 64 70 56 70" 
-                    fill="#0A0A0A"/>
-            </svg>
+            <div class="logo-brand-text">All<span class="green-p">P</span>uffs</div>
           </div>
         </div>
 
@@ -862,12 +860,7 @@
       <div class="screen-state" id="statePin">
         <div class="allpuffs-logo">
           <div class="logo-p-container">
-            <svg class="logo-p" viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
-              <path d="M 30 20 Q 30 10 40 10 L 70 10 Q 90 10 95 30 Q 100 50 95 70 Q 90 85 70 85 L 50 85 L 50 60 L 65 60 Q 75 60 78 50 Q 80 40 75 32 Q 70 25 60 25 L 45 25 L 45 135" 
-                    fill="#39FF14"/>
-              <path d="M 60 40 Q 68 40 70 48 Q 72 56 68 64 Q 64 70 56 70" 
-                    fill="#0A0A0A"/>
-            </svg>
+            <div class="logo-brand-text">All<span class="green-p">P</span>uffs</div>
           </div>
         </div>
 
@@ -903,12 +896,7 @@
       <div class="screen-state" id="stateProcessing">
         <div class="allpuffs-logo">
           <div class="logo-p-container">
-            <svg class="logo-p" viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
-              <path d="M 30 20 Q 30 10 40 10 L 70 10 Q 90 10 95 30 Q 100 50 95 70 Q 90 85 70 85 L 50 85 L 50 60 L 65 60 Q 75 60 78 50 Q 80 40 75 32 Q 70 25 60 25 L 45 25 L 45 135" 
-                    fill="#39FF14"/>
-              <path d="M 60 40 Q 68 40 70 48 Q 72 56 68 64 Q 64 70 56 70" 
-                    fill="#0A0A0A"/>
-            </svg>
+            <div class="logo-brand-text">All<span class="green-p">P</span>uffs</div>
           </div>
         </div>
 
@@ -931,12 +919,7 @@
       <div class="screen-state" id="stateApproved">
         <div class="allpuffs-logo">
           <div class="logo-p-container">
-            <svg class="logo-p" viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
-              <path d="M 30 20 Q 30 10 40 10 L 70 10 Q 90 10 95 30 Q 100 50 95 70 Q 90 85 70 85 L 50 85 L 50 60 L 65 60 Q 75 60 78 50 Q 80 40 75 32 Q 70 25 60 25 L 45 25 L 45 135" 
-                    fill="#39FF14"/>
-              <path d="M 60 40 Q 68 40 70 48 Q 72 56 68 64 Q 64 70 56 70" 
-                    fill="#0A0A0A"/>
-            </svg>
+            <div class="logo-brand-text">All<span class="green-p">P</span>uffs</div>
           </div>
         </div>
 
@@ -960,12 +943,7 @@
       <div class="screen-state" id="stateDeclined">
         <div class="allpuffs-logo">
           <div class="logo-p-container">
-            <svg class="logo-p" viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
-              <path d="M 30 20 Q 30 10 40 10 L 70 10 Q 90 10 95 30 Q 100 50 95 70 Q 90 85 70 85 L 50 85 L 50 60 L 65 60 Q 75 60 78 50 Q 80 40 75 32 Q 70 25 60 25 L 45 25 L 45 135" 
-                    fill="#39FF14"/>
-              <path d="M 60 40 Q 68 40 70 48 Q 72 56 68 64 Q 64 70 56 70" 
-                    fill="#0A0A0A"/>
-            </svg>
+            <div class="logo-brand-text">All<span class="green-p">P</span>uffs</div>
           </div>
         </div>
 
@@ -984,12 +962,13 @@
     </div>
   </div>
 
-  <!-- Control Overlay (for testing) -->
+  <!-- Control Overlay (for testing - hidden by default in production) -->
   <div class="control-overlay" id="controlPanel">
     <div class="control-title">Test Controls</div>
-    <button class="control-btn" onclick="testFlow()">▶ Full Flow ($38.95)</button>
+    <button class="control-btn" onclick="testFlow()">▶ Simulate POS Transaction</button>
     <button class="control-btn" onclick="setState('statePhone')">📱 Phone Entry</button>
     <button class="control-btn" onclick="setState('statePaymentMethod')">💳 Payment Select</button>
+    <button class="control-btn" onclick="setState('stateIdle')">💳 Card Swipe</button>
     <button class="control-btn" onclick="setState('statePin')">🔢 PIN Entry</button>
     <button class="control-btn" onclick="setState('stateProcessing')">⏳ Processing</button>
     <button class="control-btn" onclick="approveTransaction()">✓ Approve</button>
@@ -998,81 +977,201 @@
   </div>
 
   <script>
-    // Transaction State
+    // ============================================================================
+    // Terminal State
+    // ============================================================================
+
     let currentPin = '';
+    let customerData = null; // Synced from POS via localStorage
+
     let transactionData = {
-      amount: 38.95,
+      amount: 0,
+      items: [],
       cardNumber: '4242424242424242',
-      cardholder: 'JOHN DOE',
+      cardholder: 'CUSTOMER',
       phone: '',
       paymentMethod: '',
-      authCode: ''
+      authCode: '',
+      transactionId: ''
     };
 
-    // Set Active State
+    // ============================================================================
+    // Screen State Management
+    // ============================================================================
+
     function setState(stateName) {
       document.querySelectorAll('.screen-state').forEach(el => {
         el.classList.remove('active');
       });
-      document.getElementById(stateName).classList.add('active');
+      const el = document.getElementById(stateName);
+      if (el) el.classList.add('active');
     }
 
-    // Format Currency
     function formatCurrency(amount) {
       return '$' + parseFloat(amount).toFixed(2);
     }
 
-    // Format Phone Number
     function formatPhoneNumber(value) {
       const cleaned = value.replace(/\D/g, '');
       const match = cleaned.match(/^(\d{0,3})(\d{0,3})(\d{0,4})$/);
       if (!match) return value;
-      
       let formatted = '';
       if (match[1]) formatted += '(' + match[1];
       if (match[2]) formatted += ') ' + match[2];
       if (match[3]) formatted += '-' + match[3];
-      
       return formatted;
     }
 
     // Auto-format phone input
     document.getElementById('phoneInput')?.addEventListener('input', (e) => {
-      const formatted = formatPhoneNumber(e.target.value);
-      e.target.value = formatted;
+      e.target.value = formatPhoneNumber(e.target.value);
     });
 
-    // Phone Number Flow
+    // ============================================================================
+    // POS Bridge - Listen for transactions from POS
+    // ============================================================================
+
+    function checkForTransaction() {
+      const raw = localStorage.getItem('terminal_transaction');
+      if (!raw) return;
+
+      try {
+        const txn = JSON.parse(raw);
+        if (txn && txn.id && txn.id !== transactionData.transactionId) {
+          // New transaction from POS
+          transactionData.transactionId = txn.id;
+          transactionData.amount = txn.total || 0;
+          transactionData.items = txn.items || [];
+          transactionData.paymentMethod = txn.paymentMethod || 'card';
+
+          // Check if customer is already known
+          if (txn.customer) {
+            customerData = txn.customer;
+          }
+
+          // Move to phone entry
+          setState('statePhone');
+          document.getElementById('phoneInput').value = '';
+
+          // Update amount display
+          const amountEl = document.getElementById('displayAmount');
+          if (amountEl) amountEl.textContent = formatCurrency(transactionData.amount);
+        }
+      } catch (e) {
+        // Ignore parse errors
+      }
+    }
+
+    // Listen for storage events (when POS writes data)
+    window.addEventListener('storage', (event) => {
+      if (event.key === 'terminal_transaction') {
+        checkForTransaction();
+      }
+      if (event.key === 'terminal_customer_data') {
+        // POS sent customer data back after phone lookup
+        try {
+          customerData = JSON.parse(event.newValue);
+        } catch (e) {}
+      }
+    });
+
+    // Also poll periodically in case storage event doesn't fire (same-tab testing)
+    setInterval(checkForTransaction, 1000);
+
+    // ============================================================================
+    // Phone Entry
+    // ============================================================================
+
     function submitPhone() {
       const phone = document.getElementById('phoneInput').value;
+      if (!phone || phone.replace(/\D/g, '').length < 7) {
+        // Highlight the input briefly
+        const input = document.getElementById('phoneInput');
+        input.style.borderColor = 'var(--error)';
+        setTimeout(() => { input.style.borderColor = ''; }, 1500);
+        return;
+      }
+
       transactionData.phone = phone;
-      setState('statePaymentMethod');
-      document.getElementById('displayAmount').textContent = formatCurrency(transactionData.amount);
+
+      // Write phone entry to localStorage - POS listens for this
+      localStorage.setItem('terminal_phone_entry', JSON.stringify({
+        phone: phone,
+        timestamp: new Date().toISOString()
+      }));
+
+      // Wait briefly for POS to respond with customer data, then proceed
+      setTimeout(() => {
+        // Try to read customer data that POS may have written
+        try {
+          const raw = localStorage.getItem('terminal_customer_data');
+          if (raw) customerData = JSON.parse(raw);
+        } catch (e) {}
+
+        goToPaymentMethod();
+      }, 800);
     }
 
     function skipPhone() {
       transactionData.phone = '';
+      goToPaymentMethod();
+    }
+
+    function goToPaymentMethod() {
+      // Update payment options based on whether customer has bank linked
+      updatePaymentOptions();
       setState('statePaymentMethod');
       document.getElementById('displayAmount').textContent = formatCurrency(transactionData.amount);
     }
 
-    // Payment Method Selection
+    function updatePaymentOptions() {
+      const bankLinked = customerData?.bankLinked || false;
+      const achOption = document.querySelector('[data-payment="ach"]');
+      if (achOption) {
+        if (bankLinked) {
+          achOption.style.display = 'flex';
+          achOption.style.opacity = '1';
+          achOption.querySelector('.payment-desc').textContent = 'Pay directly from your bank - 2x points';
+        } else {
+          achOption.style.display = 'flex';
+          achOption.style.opacity = '0.4';
+          achOption.querySelector('.payment-desc').textContent = 'Link bank account to unlock';
+          achOption.style.pointerEvents = 'none';
+        }
+      }
+    }
+
+    // ============================================================================
+    // Payment Method
+    // ============================================================================
+
     function selectPayment(method) {
+      // Block ACH if bank not linked
+      if (method === 'ach' && !(customerData?.bankLinked)) {
+        return;
+      }
+
       transactionData.paymentMethod = method;
-      
+
       // Visual selection
       document.querySelectorAll('.payment-option').forEach(el => {
         el.classList.remove('selected');
       });
-      event.currentTarget.classList.add('selected');
-      
-      // Proceed based on method
+      if (event && event.currentTarget) {
+        event.currentTarget.classList.add('selected');
+      }
+
+      // Notify POS of processing state
+      localStorage.setItem('terminal_status', JSON.stringify({
+        status: 'processing',
+        timestamp: new Date().toISOString()
+      }));
+
       setTimeout(() => {
         if (method === 'ach') {
-          // ACH goes straight to processing (already linked)
           processPayment();
         } else {
-          // Card needs PIN and physical swipe
+          // Card flow: swipe animation -> reading -> PIN
           setState('stateIdle');
           setTimeout(() => {
             setState('stateReading');
@@ -1081,21 +1180,22 @@
               currentPin = '';
               updatePinDots();
             }, 2000);
-          }, 1000);
+          }, 1500);
         }
       }, 500);
     }
 
+    // ============================================================================
     // PIN Entry
+    // ============================================================================
+
     function enterPin(digit) {
       if (currentPin.length < 4) {
         currentPin += digit;
         updatePinDots();
-        
+
         if (currentPin.length === 4) {
-          setTimeout(() => {
-            submitPin();
-          }, 300);
+          setTimeout(() => submitPin(), 300);
         }
       }
     }
@@ -1107,11 +1207,13 @@
 
     function updatePinDots() {
       for (let i = 1; i <= 4; i++) {
-        const dot = document.getElementById(`pin${i}`);
-        if (i <= currentPin.length) {
-          dot.classList.add('filled');
-        } else {
-          dot.classList.remove('filled');
+        const dot = document.getElementById('pin' + i);
+        if (dot) {
+          if (i <= currentPin.length) {
+            dot.classList.add('filled');
+          } else {
+            dot.classList.remove('filled');
+          }
         }
       }
     }
@@ -1122,11 +1224,21 @@
       }
     }
 
+    // ============================================================================
     // Process Payment
+    // ============================================================================
+
     function processPayment() {
       setState('stateProcessing');
-      
+
+      // Notify POS
+      localStorage.setItem('terminal_status', JSON.stringify({
+        status: 'processing',
+        timestamp: new Date().toISOString()
+      }));
+
       setTimeout(() => {
+        // 90% approval rate in demo
         if (Math.random() < 0.9) {
           approveTransaction();
         } else {
@@ -1135,10 +1247,16 @@
       }, 3000);
     }
 
-    // Approve Transaction
+    // ============================================================================
+    // Transaction Result
+    // ============================================================================
+
     function approveTransaction() {
       transactionData.authCode = Math.floor(100000 + Math.random() * 900000);
-      
+
+      const isACH = transactionData.paymentMethod === 'ach';
+      const pointsEarned = isACH ? 40 : 20;
+
       const detailsHTML = `
         <div class="result-row">
           <span class="result-label">Amount</span>
@@ -1146,7 +1264,7 @@
         </div>
         <div class="result-row">
           <span class="result-label">Method</span>
-          <span class="result-value">${transactionData.paymentMethod === 'ach' ? 'Bank (ACH)' : 'Card'}</span>
+          <span class="result-value">${isACH ? 'Bank (ACH)' : 'Card'}</span>
         </div>
         <div class="result-row">
           <span class="result-label">Auth Code</span>
@@ -1159,16 +1277,26 @@
           </div>
           <div class="result-row">
             <span class="result-label">Points Earned</span>
-            <span class="result-value" style="color: var(--primary);">+${transactionData.paymentMethod === 'ach' ? '40' : '20'} pts</span>
+            <span class="result-value" style="color: var(--primary);">+${pointsEarned} pts</span>
           </div>
         ` : ''}
       `;
-      
+
       document.getElementById('approvedDetails').innerHTML = detailsHTML;
       setState('stateApproved');
+
+      // Write result to localStorage - POS listens for this
+      localStorage.setItem('terminal_result', JSON.stringify({
+        status: 'approved',
+        authCode: transactionData.authCode,
+        amount: transactionData.amount,
+        paymentMethod: transactionData.paymentMethod,
+        phone: transactionData.phone,
+        pointsEarned: pointsEarned,
+        timestamp: new Date().toISOString()
+      }));
     }
 
-    // Decline Transaction
     function declineTransaction() {
       const reasons = [
         'Insufficient funds',
@@ -1177,12 +1305,24 @@
         'Transaction limit exceeded'
       ];
       const reason = reasons[Math.floor(Math.random() * reasons.length)];
-      
+
       document.getElementById('declineReason').textContent = reason;
       setState('stateDeclined');
+
+      // Write result to localStorage - POS listens for this
+      localStorage.setItem('terminal_result', JSON.stringify({
+        status: 'declined',
+        reason: reason,
+        amount: transactionData.amount,
+        paymentMethod: transactionData.paymentMethod,
+        timestamp: new Date().toISOString()
+      }));
     }
 
-    // Retry Payment
+    // ============================================================================
+    // Reset & Retry
+    // ============================================================================
+
     function retryPayment() {
       setState('statePhone');
       currentPin = '';
@@ -1190,43 +1330,69 @@
       updatePinDots();
     }
 
-    // Cancel Transaction
     function cancelTransaction() {
       resetTerminal();
     }
 
-    // Reset Terminal
     function resetTerminal() {
-      setState('statePhone');
+      setState('stateWaiting');
       currentPin = '';
+      customerData = null;
       transactionData = {
-        amount: 38.95,
+        amount: 0,
+        items: [],
         cardNumber: '4242424242424242',
-        cardholder: 'JOHN DOE',
+        cardholder: 'CUSTOMER',
         phone: '',
         paymentMethod: '',
-        authCode: ''
+        authCode: '',
+        transactionId: ''
       };
       document.getElementById('phoneInput').value = '';
       updatePinDots();
+
+      // Clean up bridge data
+      localStorage.removeItem('terminal_transaction');
+      localStorage.removeItem('terminal_phone_entry');
+      localStorage.removeItem('terminal_result');
+      localStorage.removeItem('terminal_customer_data');
+      localStorage.removeItem('terminal_status');
     }
 
-    // Test Full Flow
+    // ============================================================================
+    // Test Helpers
+    // ============================================================================
+
     function testFlow() {
-      setState('statePhone');
-      setTimeout(() => {
-        document.getElementById('phoneInput').value = '(555) 123-4567';
-        submitPhone();
-      }, 1000);
+      // Simulate a POS transaction being sent
+      const testTransaction = {
+        id: 'txn_test_' + Date.now(),
+        items: [
+          { name: 'Elf Bar BC5000', flavor: 'Blue Razz Ice', price: 15.99, quantity: 1 },
+          { name: 'Puff Bar Plus', flavor: 'Strawberry Banana', price: 12.99, quantity: 2 }
+        ],
+        subtotal: 41.97,
+        tax: 3.46,
+        total: 45.43,
+        paymentMethod: 'card',
+        customer: null,
+        timestamp: new Date().toISOString()
+      };
+      localStorage.setItem('terminal_transaction', JSON.stringify(testTransaction));
+      // Force check since same-tab storage events don't fire
+      transactionData.transactionId = ''; // Reset so it picks up the test txn
+      checkForTransaction();
     }
 
-    // Toggle Controls
     function toggleControls() {
       const panel = document.getElementById('controlPanel');
       panel.classList.toggle('hide-controls');
     }
 
-    // Initialize
+    // ============================================================================
+    // Initialize - Start in waiting state
+    // ============================================================================
+
     resetTerminal();
   </script>
 </body>

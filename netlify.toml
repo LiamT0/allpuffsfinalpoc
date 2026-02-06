@@ -3,7 +3,7 @@
   publish = "."
   command = "echo 'No build needed - static site'"
 
-# Redirect rules
+# Redirect rules for SPA routing
 [[redirects]]
   from = "/shop"
   to = "/index.html"
@@ -15,13 +15,18 @@
   status = 200
 
 [[redirects]]
+  from = "/checkout"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
   from = "/rewards"
   to = "/index.html"
   status = 200
 
 [[redirects]]
-  from = "/checkout"
-  to = "/index.html"
+  from = "/terminal"
+  to = "/card-terminal.html"
   status = 200
 
 # Headers for security
